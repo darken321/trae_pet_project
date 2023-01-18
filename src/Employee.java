@@ -58,4 +58,18 @@ public class Employee implements Serializable {
     public void setAdmin(Boolean admin) {
         isAdmin = admin;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        for (Map.Entry<String, Boolean> entry : operations.entrySet()) {
+            str.append("\n").append(entry.getKey()).append(" ").append(entry.getValue().toString()).append(",");
+        }
+        return "\n uuid " + uuid +
+                ",\n Имя " + name +
+                ",\n Фамилия " + surname +
+                str +
+                ",\nконструктор " + isConstructor +
+                ",\nадмин " + isAdmin + ".";
+    }
 }

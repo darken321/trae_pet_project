@@ -4,7 +4,7 @@ import java.util.*;
 public class init {
     static final String fileCategories = "C:\\java\\IdeaProjects\\Trae\\files\\categories.bin";
     static final String fileEmployees = "C:\\java\\IdeaProjects\\Trae\\files\\employees.bin";
-
+    //запись категорий в файл
     public static void writeCategories() {
         List<String> list = new ArrayList<>();
         list.add("раскрой");
@@ -24,21 +24,18 @@ public class init {
             throw new RuntimeException("Can't write/create file", e);
         }
     }
-
+    //чтение категорий из файла
     public static List<String> readCategories() {
-        List<String> list;
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileCategories))) {
-            list = (List<String>) ois.readObject();
+            return  (List<String>) ois.readObject();
         } catch (IOException e) {
             throw new RuntimeException("Can't read file", e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("Class exception", e);
         }
-
         //TODO проверить категории у работников, все ли категории, которые считаны, есть у работников.
-        return list;
     }
-
+    //создание двух работников, работ, которые они могут выполнять, один из них конструктор, в файл
     public static void writeEmployees() {
         List<Employee> employees = new ArrayList<>();
 
@@ -59,7 +56,7 @@ public class init {
         op1.put("отгрузка", false);
         emp1.setOperations(op1);
         emp1.setConstructor(false);
-        emp1.setConstructor(false);
+        emp1.setAdmin(false);
         employees.add(emp1);
 
         Employee emp2 = new Employee();
@@ -79,7 +76,7 @@ public class init {
         op2.put("отгрузка", true);
         emp2.setOperations(op2);
         emp2.setConstructor(true);
-        emp2.setConstructor(false);
+        emp2.setAdmin(false);
         employees.add(emp2);
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileEmployees)))
@@ -90,6 +87,15 @@ public class init {
         }
     }
 
+    public static List<Employee> readEmployees() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileEmployees))) {
+            return  (List<Employee>) ois.readObject();
+        } catch (IOException e) {
+            throw new RuntimeException("Can't read file", e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Class exception", e);
+        }
+    }
 }
 
 
